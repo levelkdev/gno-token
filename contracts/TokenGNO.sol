@@ -1,6 +1,6 @@
 pragma solidity ^0.4.21;
 
-import "@gnosis.pm/util-contracts/contracts/StandardToken.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 
 contract TokenGNO is StandardToken {
     string public constant symbol = "GNO";
@@ -12,7 +12,7 @@ contract TokenGNO is StandardToken {
     )
     	public 
     {
-        totalTokens = amount;
+        totalSupply_ = amount;
     	balances[msg.sender] = amount;
     }
 }

@@ -8,11 +8,11 @@ function migrate ({
   initialTokenAmount = INITIAL_TOKEN_AMOUNT
 }) {
   const TokenGNO = artifacts.require('TokenGNO')
-  const { Math } = _getDependencies(artifacts, network, deployer)
+  const { SafeMath } = _getDependencies(artifacts, network, deployer)
 
   return deployer
-    .then(() => Math.deployed())
-    .then(() => deployer.link(Math, TokenGNO))
+    .then(() => SafeMath.deployed())
+    .then(() => deployer.link(SafeMath, TokenGNO))
     .then(() => {
       const owner = accounts[0]
       console.log('Deploying GNO with owner: %s', owner)
@@ -21,17 +21,17 @@ function migrate ({
 }
 
 function _getDependencies (artifacts, network, deployer) {
-  let Math
+  let SafeMath
   if (network === 'development') {
-    Math = artifacts.require('Math')
+    SafeMath = artifacts.require('SafeMath')
   } else {
     const contract = require('truffle-contract')
-    Math = contract(require('@gnosis.pm/util-contracts/build/contracts/Math'))
-    Math.setProvider(deployer.provider)
+    SafeMath = contract(require('openzeppelin-solidity/contracts/math/SafeMath.sol'))
+    SafeMath.setProvider(deployer.provider)
   }
 
   return {
-    Math
+    SafeMath
   }
 }
 
